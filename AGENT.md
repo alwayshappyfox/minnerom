@@ -18,6 +18,12 @@ This file defines how humans and agents work in `minne` so project state is alwa
 5. If a decision has long-term impact, record it in `DECISIONS.md`.
 6. Update `STATUS.md` at least once per working day.
 
+## Error Handling Constraint (Required)
+If an error appears during request execution:
+- Stop execution immediately and ask the user what to do next.
+- Offer 1-3 response options.
+- Do not make a decision until the user gives an explicit answer.
+
 ## Task Status Model
 - `BACKLOG`: known, not planned.
 - `PLANNED`: approved for near-term execution.
