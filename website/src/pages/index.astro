@@ -2,35 +2,67 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Главная" description="Визитка Minne Rom: фото, блог, товары и контакты.">
-  <section class="hero">
-    <h1>Сайт-визитка Minne Rom</h1>
-    <p>
-      Минимальная версия уже готова: плавная главная, страницы фото, блога, демонстрации
-      товаров и контактов. Архитектура сделана так, чтобы позже можно было подключить магазин.
-    </p>
-    <p class="muted">Статус инфраструктуры: автодеплой из GitHub на VPS активен.</p>
-    <div class="button-row">
-      <a class="button primary" href="/photos">Смотреть фото</a>
-      <a class="button" href="/contacts">Связаться</a>
-    </div>
+<BaseLayout
+  title="Главная"
+  titleEn="Home"
+  description="Визитка Minnerom: фото, блог, товары и контакты."
+  descriptionEn="Minnerom website: photos, blog, products and contacts."
+>
+  <section class="hero home-main">
+    <h1 data-i18n data-i18n-ru="Minnerom" data-i18n-en="Minnerom">Minnerom</h1>
   </section>
 
-  <section class="grid" aria-label="Разделы сайта">
+  <section
+    class="grid home-main"
+    aria-label="Разделы сайта"
+    data-i18n-aria
+    data-i18n-aria-ru="Разделы сайта"
+    data-i18n-aria-en="Site sections"
+  >
     <article class="card">
-      <h2>Фотографии</h2>
-      <p class="muted">Каталог фото и отдельные карточки с описанием.</p>
-      <a href="/photos">Перейти в раздел</a>
+      <h2 data-i18n data-i18n-ru="Фотографии" data-i18n-en="Photos">Фотографии</h2>
+      <p
+        class="muted"
+        data-i18n
+        data-i18n-ru="Каталог фото и отдельные карточки с описанием."
+        data-i18n-en="Photo catalog with separate detail pages."
+      >
+        Каталог фото и отдельные карточки с описанием.
+      </p>
+      <a href="/photos" data-i18n data-i18n-ru="Перейти в раздел" data-i18n-en="Open section">
+        Перейти в раздел
+      </a>
     </article>
     <article class="card">
-      <h2>Блог</h2>
-      <p class="muted">Публикации, заметки и анонсы новых работ.</p>
-      <a href="/blog">Читать блог</a>
+      <h2 data-i18n data-i18n-ru="Блог" data-i18n-en="Blog">Блог</h2>
+      <p
+        class="muted"
+        data-i18n
+        data-i18n-ru="Публикации, заметки и анонсы новых работ."
+        data-i18n-en="Articles, notes and announcements."
+      >
+        Публикации, заметки и анонсы новых работ.
+      </p>
+      <a href="/blog" data-i18n data-i18n-ru="Читать блог" data-i18n-en="Read blog">Читать блог</a>
     </article>
     <article class="card">
-      <h2>Товары</h2>
-      <p class="muted">Витрина без оплаты, как подготовка к e-commerce этапу.</p>
-      <a href="/products">Открыть витрину</a>
+      <h2 data-i18n data-i18n-ru="Товары" data-i18n-en="Products">Товары</h2>
+      <p
+        class="muted"
+        data-i18n
+        data-i18n-ru="Витрина без оплаты, как подготовка к e-commerce этапу."
+        data-i18n-en="Showcase without checkout, ready for a later e-commerce stage."
+      >
+        Витрина без оплаты, как подготовка к e-commerce этапу.
+      </p>
+      <a
+        href="/products"
+        data-i18n
+        data-i18n-ru="Открыть витрину"
+        data-i18n-en="Open showcase"
+      >
+        Открыть витрину
+      </a>
     </article>
   </section>
 </BaseLayout>

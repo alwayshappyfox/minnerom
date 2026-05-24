@@ -5,22 +5,41 @@ const products = [
   {
     slug: "print-a3-demo",
     name: "Print A3 (Demo)",
-    description: "Демонстрационная карточка товара без оплаты.",
+    descriptionRu: "Демонстрационная карточка товара без оплаты.",
+    descriptionEn: "Demo product page without checkout.",
   },
 ];
 ---
 
-<BaseLayout title="Товары" description="Демо-витрина товаров Minne Rom.">
-  <h1 class="page-title">Товары</h1>
-  <p class="muted">На этом этапе это витрина. Оплата и корзина подключаются позже.</p>
+<BaseLayout
+  title="Товары"
+  titleEn="Products"
+  description="Демо-витрина товаров Minnerom."
+  descriptionEn="Minnerom demo product showcase."
+>
+  <h1 class="page-title" data-i18n data-i18n-ru="Товары" data-i18n-en="Products">Товары</h1>
+  <p
+    class="muted"
+    data-i18n
+    data-i18n-ru="На этом этапе это витрина. Оплата и корзина подключаются позже."
+    data-i18n-en="At this stage it is only a showcase. Checkout and cart come later."
+  >
+    На этом этапе это витрина. Оплата и корзина подключаются позже.
+  </p>
 
   <section class="grid">
     {products.map((product) => (
       <article class="card">
-        <div class="fake-media">Превью товара</div>
+        <div class="fake-media" data-i18n data-i18n-ru="Превью товара" data-i18n-en="Product preview">
+          Превью товара
+        </div>
         <h2>{product.name}</h2>
-        <p>{product.description}</p>
-        <a href={`/products/${product.slug}`}>Открыть карточку</a>
+        <p data-i18n data-i18n-ru={product.descriptionRu} data-i18n-en={product.descriptionEn}>
+          {product.descriptionRu}
+        </p>
+        <a href={`/products/${product.slug}`} data-i18n data-i18n-ru="Открыть карточку" data-i18n-en="Open page">
+          Открыть карточку
+        </a>
       </article>
     ))}
   </section>

@@ -5,22 +5,46 @@ const photos = [
   {
     slug: "morning-light",
     title: "Morning Light",
-    description: "Мягкий утренний свет и спокойная атмосфера.",
+    descriptionRu: "Мягкий утренний свет и спокойная атмосфера.",
+    descriptionEn: "Soft morning light and a calm atmosphere.",
   },
 ];
 ---
 
-<BaseLayout title="Фотографии" description="Список фотографий Minne Rom.">
-  <h1 class="page-title">Фотографии</h1>
-  <p class="muted">Пока один материал, дальше список можно расширять без изменения структуры.</p>
+<BaseLayout
+  title="Фотографии"
+  titleEn="Photos"
+  description="Список фотографий Minnerom."
+  descriptionEn="Minnerom photo list."
+>
+  <h1 class="page-title" data-i18n data-i18n-ru="Фотографии" data-i18n-en="Photos">Фотографии</h1>
+  <p
+    class="muted"
+    data-i18n
+    data-i18n-ru="Пока один материал, дальше список можно расширять без изменения структуры."
+    data-i18n-en="One item for now, but the list can scale without changing the structure."
+  >
+    Пока один материал, дальше список можно расширять без изменения структуры.
+  </p>
 
   <section class="grid">
     {photos.map((photo) => (
       <article class="card">
-        <div class="fake-media">Превью фото</div>
+        <div class="fake-media" data-i18n data-i18n-ru="Превью фото" data-i18n-en="Photo preview">
+          Превью фото
+        </div>
         <h2>{photo.title}</h2>
-        <p class="muted">{photo.description}</p>
-        <a href={`/photos/${photo.slug}`}>Открыть карточку</a>
+        <p
+          class="muted"
+          data-i18n
+          data-i18n-ru={photo.descriptionRu}
+          data-i18n-en={photo.descriptionEn}
+        >
+          {photo.descriptionRu}
+        </p>
+        <a href={`/photos/${photo.slug}`} data-i18n data-i18n-ru="Открыть карточку" data-i18n-en="Open page">
+          Открыть карточку
+        </a>
       </article>
     ))}
   </section>

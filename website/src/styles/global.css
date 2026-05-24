@@ -67,6 +67,14 @@ h6 {
   padding: 14px 0;
 }
 
+.nav-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
 nav {
   display: flex;
   gap: 16px;
@@ -74,10 +82,37 @@ nav {
 }
 
 .brand {
+  font-family: var(--font-heading);
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: 0.03em;
   color: var(--accent);
+}
+
+.lang-switch {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.lang-btn {
+  border: 0;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+}
+
+.lang-btn:hover {
+  background: rgb(124 1 21 / 8%);
+}
+
+.lang-btn.is-active {
+  background: var(--accent);
+  color: #fff;
 }
 
 a {
@@ -110,6 +145,19 @@ main {
   margin: 0;
   color: var(--muted);
   max-width: 62ch;
+}
+
+.home-main,
+.home-main h1,
+.home-main h2,
+.home-main p,
+.home-main a,
+.home-main .muted {
+  color: var(--text);
+}
+
+.home-main a:hover {
+  color: var(--text);
 }
 
 .button-row {
@@ -229,6 +277,16 @@ textarea {
 }
 
 @media (max-width: 640px) {
+  .nav-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-tools {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .hero {
     padding: 24px;
   }

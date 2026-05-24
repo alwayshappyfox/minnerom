@@ -2,25 +2,60 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Контакты" description="Контакты Minne Rom.">
-  <h1 class="page-title">Контакты</h1>
-  <p class="muted">
+<BaseLayout
+  title="Контакты"
+  titleEn="Contacts"
+  description="Контакты Minnerom."
+  descriptionEn="Minnerom contacts."
+>
+  <h1 class="page-title" data-i18n data-i18n-ru="Контакты" data-i18n-en="Contacts">Контакты</h1>
+  <p
+    class="muted"
+    data-i18n
+    data-i18n-ru="Форма пока демонстрационная. На следующем шаге подключим отправку через Worker или form endpoint."
+    data-i18n-en="The form is demo-only for now. Next step is wiring submission via Worker or form endpoint."
+  >
     Форма пока демонстрационная. На следующем шаге подключим отправку через Worker или form endpoint.
   </p>
 
   <form action="#" method="post">
     <label>
-      Имя
-      <input type="text" name="name" placeholder="Ваше имя" required />
+      <span data-i18n data-i18n-ru="Имя" data-i18n-en="Name">Имя</span>
+      <input
+        type="text"
+        name="name"
+        placeholder="Ваше имя"
+        data-i18n-placeholder
+        data-i18n-placeholder-ru="Ваше имя"
+        data-i18n-placeholder-en="Your name"
+        required
+      />
     </label>
     <label>
       Email
-      <input type="email" name="email" placeholder="you@example.com" required />
+      <input
+        type="email"
+        name="email"
+        placeholder="you@example.com"
+        data-i18n-placeholder
+        data-i18n-placeholder-ru="you@example.com"
+        data-i18n-placeholder-en="you@example.com"
+        required
+      />
     </label>
     <label>
-      Сообщение
-      <textarea name="message" placeholder="О чем хотите спросить" required></textarea>
+      <span data-i18n data-i18n-ru="Сообщение" data-i18n-en="Message">Сообщение</span>
+      <textarea
+        name="message"
+        placeholder="О чем хотите спросить"
+        data-i18n-placeholder
+        data-i18n-placeholder-ru="О чем хотите спросить"
+        data-i18n-placeholder-en="What do you want to ask about?"
+        required
+      ></textarea>
     </label>
-    <button class="button primary" type="submit">Отправить</button>
+    <button class="button primary" type="submit" data-i18n data-i18n-ru="Отправить" data-i18n-en="Send">
+      Отправить
+    </button>
   </form>
 </BaseLayout>

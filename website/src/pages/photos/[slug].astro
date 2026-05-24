@@ -6,8 +6,10 @@ export function getStaticPaths() {
     {
       slug: "morning-light",
       title: "Morning Light",
-      description: "Мягкий утренний свет и спокойная атмосфера.",
-      story: "Эта серия снята в ранние часы, когда свет мягкий и направленный.",
+      descriptionRu: "Мягкий утренний свет и спокойная атмосфера.",
+      descriptionEn: "Soft morning light and a calm atmosphere.",
+      storyRu: "Эта серия снята в ранние часы, когда свет мягкий и направленный.",
+      storyEn: "This series was shot in the early morning when the light is soft and directional.",
     },
   ];
 
@@ -20,12 +22,37 @@ export function getStaticPaths() {
 const { photo } = Astro.props;
 ---
 
-<BaseLayout title={photo.title} description={photo.description}>
+<BaseLayout
+  title={photo.title}
+  titleEn={photo.title}
+  description={photo.descriptionRu}
+  descriptionEn={photo.descriptionEn}
+>
   <article class="card">
     <h1 class="page-title">{photo.title}</h1>
-    <div class="fake-media">Изображение: {photo.title}</div>
-    <p>{photo.description}</p>
-    <p class="muted">{photo.story}</p>
-    <p><a href="/photos">← Назад к списку фото</a></p>
+    <div
+      class="fake-media"
+      data-i18n
+      data-i18n-ru={`Изображение: ${photo.title}`}
+      data-i18n-en={`Image: ${photo.title}`}
+    >
+      Изображение: {photo.title}
+    </div>
+    <p data-i18n data-i18n-ru={photo.descriptionRu} data-i18n-en={photo.descriptionEn}>
+      {photo.descriptionRu}
+    </p>
+    <p class="muted" data-i18n data-i18n-ru={photo.storyRu} data-i18n-en={photo.storyEn}>
+      {photo.storyRu}
+    </p>
+    <p>
+      <a
+        href="/photos"
+        data-i18n
+        data-i18n-ru="← Назад к списку фото"
+        data-i18n-en="← Back to photos"
+      >
+        ← Назад к списку фото
+      </a>
+    </p>
   </article>
 </BaseLayout>
