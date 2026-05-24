@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const posts = [
+  {
+    slug: "start-of-project",
+    title: "Запуск проекта",
+    excerpt: "Что уже настроено на сервере и как будет развиваться сайт.",
+    date: "24.05.2026",
+  },
+];
+---
+
+<BaseLayout title="Блог" description="Блог Minne Rom.">
+  <h1 class="page-title">Блог</h1>
+  <section class="grid">
+    {posts.map((post) => (
+      <article class="card">
+        <h2>{post.title}</h2>
+        <p class="muted">{post.date}</p>
+        <p>{post.excerpt}</p>
+        <a href={`/blog/${post.slug}`}>Читать</a>
+      </article>
+    ))}
+  </section>
+</BaseLayout>

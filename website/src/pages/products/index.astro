@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const products = [
+  {
+    slug: "print-a3-demo",
+    name: "Print A3 (Demo)",
+    description: "Демонстрационная карточка товара без оплаты.",
+  },
+];
+---
+
+<BaseLayout title="Товары" description="Демо-витрина товаров Minne Rom.">
+  <h1 class="page-title">Товары</h1>
+  <p class="muted">На этом этапе это витрина. Оплата и корзина подключаются позже.</p>
+
+  <section class="grid">
+    {products.map((product) => (
+      <article class="card">
+        <div class="fake-media">Превью товара</div>
+        <h2>{product.name}</h2>
+        <p>{product.description}</p>
+        <a href={`/products/${product.slug}`}>Открыть карточку</a>
+      </article>
+    ))}
+  </section>
+</BaseLayout>

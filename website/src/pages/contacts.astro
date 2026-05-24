@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Контакты" description="Контакты Minne Rom.">
+  <h1 class="page-title">Контакты</h1>
+  <p class="muted">
+    Форма пока демонстрационная. На следующем шаге подключим отправку через Worker или form endpoint.
+  </p>
+
+  <form action="#" method="post">
+    <label>
+      Имя
+      <input type="text" name="name" placeholder="Ваше имя" required />
+    </label>
+    <label>
+      Email
+      <input type="email" name="email" placeholder="you@example.com" required />
+    </label>
+    <label>
+      Сообщение
+      <textarea name="message" placeholder="О чем хотите спросить" required></textarea>
+    </label>
+    <button class="button primary" type="submit">Отправить</button>
+  </form>
+</BaseLayout>

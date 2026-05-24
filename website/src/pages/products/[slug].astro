@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  const products = [
+    {
+      slug: "print-a3-demo",
+      name: "Print A3 (Demo)",
+      description: "Демонстрационная карточка товара без оплаты.",
+      details:
+        "Будущий путь: добавить цены, остатки и checkout через Shopify/Snipcart/другой сервис.",
+    },
+  ];
+
+  return products.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+---
+
+<BaseLayout title={product.name} description={product.description}>
+  <article class="card">
+    <h1 class="page-title">{product.name}</h1>
+    <div class="fake-media">Изображение товара</div>
+    <p>{product.description}</p>
+    <p class="muted">{product.details}</p>
+    <p><a href="/products">← Назад к витрине</a></p>
+  </article>
+</BaseLayout>

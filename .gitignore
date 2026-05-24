@@ -1,0 +1,5 @@
+website/node_modules/
+website/dist/
+website/.astro/
+website/.DS_Store
+.DS_Store

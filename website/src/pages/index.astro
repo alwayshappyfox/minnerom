@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Главная" description="Визитка Minne Rom: фото, блог, товары и контакты.">
+  <section class="hero">
+    <h1>Сайт-визитка Minne Rom</h1>
+    <p>
+      Минимальная версия уже готова: плавная главная, страницы фото, блога, демонстрации
+      товаров и контактов. Архитектура сделана так, чтобы позже можно было подключить магазин.
+    </p>
+    <div class="button-row">
+      <a class="button primary" href="/photos">Смотреть фото</a>
+      <a class="button" href="/contacts">Связаться</a>
+    </div>
+  </section>
+
+  <section class="grid" aria-label="Разделы сайта">
+    <article class="card">
+      <h2>Фотографии</h2>
+      <p class="muted">Каталог фото и отдельные карточки с описанием.</p>
+      <a href="/photos">Перейти в раздел</a>
+    </article>
+    <article class="card">
+      <h2>Блог</h2>
+      <p class="muted">Публикации, заметки и анонсы новых работ.</p>
+      <a href="/blog">Читать блог</a>
+    </article>
+    <article class="card">
+      <h2>Товары</h2>
+      <p class="muted">Витрина без оплаты, как подготовка к e-commerce этапу.</p>
+      <a href="/products">Открыть витрину</a>
+    </article>
+  </section>
+</BaseLayout>

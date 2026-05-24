@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  const posts = [
+    {
+      slug: "start-of-project",
+      title: "Запуск проекта",
+      date: "24.05.2026",
+      content:
+        "Сервер на VPS готов: Nginx, HTTPS, автопродление сертификата и базовая структура Astro. Следующий шаг — наполнить контентом фото, блог и витрину.",
+    },
+  ];
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<BaseLayout title={post.title} description={post.content}>
+  <article class="card">
+    <h1 class="page-title">{post.title}</h1>
+    <p class="muted">{post.date}</p>
+    <p>{post.content}</p>
+    <p><a href="/blog">← Назад к блогу</a></p>
+  </article>
+</BaseLayout>

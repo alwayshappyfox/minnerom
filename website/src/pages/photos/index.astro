@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const photos = [
+  {
+    slug: "morning-light",
+    title: "Morning Light",
+    description: "Мягкий утренний свет и спокойная атмосфера.",
+  },
+];
+---
+
+<BaseLayout title="Фотографии" description="Список фотографий Minne Rom.">
+  <h1 class="page-title">Фотографии</h1>
+  <p class="muted">Пока один материал, дальше список можно расширять без изменения структуры.</p>
+
+  <section class="grid">
+    {photos.map((photo) => (
+      <article class="card">
+        <div class="fake-media">Превью фото</div>
+        <h2>{photo.title}</h2>
+        <p class="muted">{photo.description}</p>
+        <a href={`/photos/${photo.slug}`}>Открыть карточку</a>
+      </article>
+    ))}
+  </section>
+</BaseLayout>

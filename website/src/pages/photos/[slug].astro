@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  const photos = [
+    {
+      slug: "morning-light",
+      title: "Morning Light",
+      description: "Мягкий утренний свет и спокойная атмосфера.",
+      story: "Эта серия снята в ранние часы, когда свет мягкий и направленный.",
+    },
+  ];
+
+  return photos.map((photo) => ({
+    params: { slug: photo.slug },
+    props: { photo },
+  }));
+}
+
+const { photo } = Astro.props;
+---
+
+<BaseLayout title={photo.title} description={photo.description}>
+  <article class="card">
+    <h1 class="page-title">{photo.title}</h1>
+    <div class="fake-media">Изображение: {photo.title}</div>
+    <p>{photo.description}</p>
+    <p class="muted">{photo.story}</p>
+    <p><a href="/photos">← Назад к списку фото</a></p>
+  </article>
+</BaseLayout>
