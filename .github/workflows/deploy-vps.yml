@@ -1,12 +1,6 @@
 name: Deploy Astro to VPS
 
 on:
-  push:
-    branches:
-      - website
-    paths:
-      - "website/**"
-      - ".github/workflows/deploy-vps.yml"
   workflow_dispatch:
 
 concurrency:
