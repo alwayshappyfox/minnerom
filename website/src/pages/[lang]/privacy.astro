@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { localizedPathPair, metaText, privacyText } from "../../lib/content";
+import { LOCALES, localizePath, type Locale } from "../../lib/i18n";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
+}
+
+const { lang } = Astro.props as { lang: Locale };
+const canonicalPath = localizePath(lang, "/privacy");
+const switchUrls = localizedPathPair(lang, "/privacy");
+---
+
+<BaseLayout
+  lang={lang}
+  title={metaText.privacyTitle[lang]}
+  description={metaText.privacyDescription[lang]}
+  canonicalPath={canonicalPath}
+  switchUrls={switchUrls}
+  hreflangUrls={{
+    ru: localizePath("ru", "/privacy"),
+    en: localizePath("en", "/privacy"),
+  }}
+>
+  <h1 class="page-title">{metaText.privacyTitle[lang]}</h1>
+  <article class="card">
+    <p>{privacyText[lang]}</p>
+  </article>
+</BaseLayout>

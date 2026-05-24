@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { homeSections, metaText, localizedPathPair, uiText } from "../../lib/content";
+import { LOCALES, localizePath, type Locale } from "../../lib/i18n";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
+}
+
+const { lang } = Astro.props as { lang: Locale };
+const switchUrls = localizedPathPair(lang, "/");
+const canonicalPath = localizePath(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={metaText.homeTitle[lang]}
+  description={metaText.homeDescription[lang]}
+  canonicalPath={canonicalPath}
+  switchUrls={switchUrls}
+  hreflangUrls={{
+    ru: localizePath("ru"),
+    en: localizePath("en"),
+  }}
+>
+  <section class="hero home-main">
+    <h1>{uiText.siteName}</h1>
+  </section>
+
+  <section class="grid home-main" aria-label={lang === "ru" ? "Разделы сайта" : "Site sections"}>
+    {homeSections.map((section) => (
+      <article class="card">
+        <h2>{section.title[lang]}</h2>
+        <p class="muted">{section.description[lang]}</p>
+        <a href={localizePath(lang, section.href)}>{section.cta[lang]}</a>
+      </article>
+    ))}
+  </section>
+</BaseLayout>

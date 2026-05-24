@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { metaText, localizedPathPair, photoItems, photosIntro } from "../../../lib/content";
+import { LOCALES, localizePath, type Locale } from "../../../lib/i18n";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
+}
+
+const { lang } = Astro.props as { lang: Locale };
+const switchUrls = localizedPathPair(lang, "/photos");
+const canonicalPath = localizePath(lang, "/photos");
+---
+
+<BaseLayout
+  lang={lang}
+  title={metaText.photosTitle[lang]}
+  description={metaText.photosDescription[lang]}
+  canonicalPath={canonicalPath}
+  switchUrls={switchUrls}
+  hreflangUrls={{
+    ru: localizePath("ru", "/photos"),
+    en: localizePath("en", "/photos"),
+  }}
+>
+  <h1 class="page-title">{metaText.photosTitle[lang]}</h1>
+  <p class="muted">{photosIntro[lang]}</p>
+
+  <section class="grid">
+    {photoItems.map((photo) => (
+      <article class="card">
+        <div class="fake-media">{lang === "ru" ? "Превью фото" : "Photo preview"}</div>
+        <h2>{photo.title[lang]}</h2>
+        <p class="muted">{photo.description[lang]}</p>
+        <a href={localizePath(lang, `/photos/${photo.slug[lang]}`)}>
+          {lang === "ru" ? "Открыть карточку" : "Open page"}
+        </a>
+      </article>
+    ))}
+  </section>
+</BaseLayout>

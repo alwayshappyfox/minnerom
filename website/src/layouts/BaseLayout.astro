@@ -1,56 +1,91 @@
 ---
 import "../styles/global.css";
+import { SITE_URL, localizePath, type Locale } from "../lib/i18n";
+import { uiText } from "../lib/content";
 
 interface Props {
+  lang: Locale;
   title: string;
-  titleEn?: string;
-  description?: string;
-  descriptionEn?: string;
+  description: string;
+  canonicalPath: string;
+  switchUrls: Record<Locale, string>;
+  hreflangUrls?: Partial<Record<Locale, string>>;
+  noindex?: boolean;
 }
 
 const {
+  lang,
   title,
-  titleEn,
-  description = "Портфолио и блог Minnerom: фотографии, статьи, товары и контакты.",
-  descriptionEn,
+  description,
+  canonicalPath,
+  switchUrls,
+  hreflangUrls = {},
+  noindex = false,
 } = Astro.props;
 
-const siteName = "Minnerom";
-const pageTitle = `${title} | ${siteName}`;
-const pageTitleEn = `${titleEn ?? title} | ${siteName}`;
-const pageDescriptionEn = descriptionEn ?? description;
+const pageTitle = `${title} | ${uiText.siteName}`;
+const fullCanonical = new URL(canonicalPath, SITE_URL).toString();
+
+const resolvedHreflangs: Partial<Record<Locale, string>> = {
+  [lang]: canonicalPath,
+  ...hreflangUrls,
+};
+
+const navLinks = [
+  { href: localizePath(lang, "/photos"), label: uiText.navigation.photos[lang] },
+  { href: localizePath(lang, "/blog"), label: uiText.navigation.blog[lang] },
+  { href: localizePath(lang, "/products"), label: uiText.navigation.products[lang] },
+  { href: localizePath(lang, "/contacts"), label: uiText.navigation.contacts[lang] },
+];
 ---
 
 <!doctype html>
-<html lang="ru">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={fullCanonical} />
+    {resolvedHreflangs.ru && (
+      <link rel="alternate" hrefLang="ru" href={new URL(resolvedHreflangs.ru, SITE_URL).toString()} />
+    )}
+    {resolvedHreflangs.en && (
+      <link rel="alternate" hrefLang="en" href={new URL(resolvedHreflangs.en, SITE_URL).toString()} />
+    )}
+    <link rel="alternate" hrefLang="x-default" href={new URL("/", SITE_URL).toString()} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <title>{pageTitle}</title>
   </head>
-  <body
-    data-title-ru={pageTitle}
-    data-title-en={pageTitleEn}
-    data-description-ru={description}
-    data-description-en={pageDescriptionEn}
-  >
+  <body>
     <header class="site-header">
       <div class="container nav-wrap">
-        <a class="brand" href="/" data-i18n data-i18n-ru="Minnerom" data-i18n-en="Minnerom">Minnerom</a>
+        <a class="brand" href={localizePath(lang)}>{uiText.siteName}</a>
         <div class="nav-tools">
           <nav>
-            <a href="/photos" data-i18n data-i18n-ru="Фото" data-i18n-en="Photos">Фото</a>
-            <a href="/blog" data-i18n data-i18n-ru="Блог" data-i18n-en="Blog">Блог</a>
-            <a href="/products" data-i18n data-i18n-ru="Товары" data-i18n-en="Products">Товары</a>
-            <a href="/contacts" data-i18n data-i18n-ru="Контакты" data-i18n-en="Contacts">Контакты</a>
+            {navLinks.map((item) => (
+              <a href={item.href}>{item.label}</a>
+            ))}
           </nav>
-          <div class="lang-switch" data-i18n-aria data-i18n-aria-ru="Переключение языка" data-i18n-aria-en="Language switch">
-            <button class="lang-btn" type="button" data-lang-toggle="ru" aria-pressed="true">RU</button>
-            <button class="lang-btn" type="button" data-lang-toggle="en" aria-pressed="false">EN</button>
+          <div class="lang-switch" aria-label={uiText.languageSwitchLabel[lang]}>
+            <a
+              class:list={["lang-btn", { "is-active": lang === "ru" }]}
+              href={switchUrls.ru}
+              data-lang-set="ru"
+              aria-current={lang === "ru" ? "page" : undefined}
+            >
+              RU
+            </a>
+            <a
+              class:list={["lang-btn", { "is-active": lang === "en" }]}
+              href={switchUrls.en}
+              data-lang-set="en"
+              aria-current={lang === "en" ? "page" : undefined}
+            >
+              EN
+            </a>
           </div>
         </div>
       </div>
@@ -62,106 +97,27 @@ const pageDescriptionEn = descriptionEn ?? description;
 
     <footer class="site-footer">
       <div class="container footer-wrap">
-        <p>© {new Date().getFullYear()} Minnerom</p>
+        <p>© {new Date().getFullYear()} {uiText.siteName}</p>
         <div class="footer-links">
-          <a href="/privacy" data-i18n data-i18n-ru="Политика" data-i18n-en="Privacy">Политика</a>
-          <a href="/terms" data-i18n data-i18n-ru="Условия" data-i18n-en="Terms">Условия</a>
+          <a href={localizePath(lang, "/privacy")}>{uiText.navigation.privacy[lang]}</a>
+          <a href={localizePath(lang, "/terms")}>{uiText.navigation.terms[lang]}</a>
         </div>
       </div>
     </footer>
+
     <script is:inline>
       (() => {
-        const STORAGE_KEY = "minnerom-language";
-        const SUPPORTED = new Set(["ru", "en"]);
+        const key = "minnerom_lang";
+        const year = 60 * 60 * 24 * 365;
 
-        const getSavedLanguage = () => {
-          try {
-            const saved = window.localStorage.getItem(STORAGE_KEY);
-            return saved && SUPPORTED.has(saved) ? saved : null;
-          } catch {
-            return null;
-          }
-        };
-
-        const detectLanguage = () => {
-          const languageList = Array.isArray(navigator.languages)
-            ? navigator.languages
-            : [navigator.language];
-
-          for (const language of languageList) {
-            if (typeof language === "string" && language.toLowerCase().startsWith("ru")) {
-              return "ru";
+        document.querySelectorAll("[data-lang-set]").forEach((link) => {
+          link.addEventListener("click", () => {
+            const nextLang = link.getAttribute("data-lang-set");
+            if (!nextLang) {
+              return;
             }
-          }
 
-          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-          const cisTimezones =
-            /(Moscow|Minsk|Almaty|Bishkek|Tashkent|Yekaterinburg|Novosibirsk|Samara|Omsk|Irkutsk|Vladivostok)/i;
-          return cisTimezones.test(timezone) ? "ru" : "en";
-        };
-
-        const applyLanguage = (language, persist = true) => {
-          const lang = SUPPORTED.has(language) ? language : "ru";
-          document.documentElement.lang = lang;
-
-          document.querySelectorAll("[data-i18n]").forEach((node) => {
-            const value = node.getAttribute(`data-i18n-${lang}`);
-            if (value !== null) {
-              node.textContent = value;
-            }
-          });
-
-          document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
-            const value = node.getAttribute(`data-i18n-placeholder-${lang}`);
-            if (value !== null) {
-              node.setAttribute("placeholder", value);
-            }
-          });
-
-          document.querySelectorAll("[data-i18n-aria]").forEach((node) => {
-            const value = node.getAttribute(`data-i18n-aria-${lang}`);
-            if (value !== null) {
-              node.setAttribute("aria-label", value);
-            }
-          });
-
-          const body = document.body;
-          const title = body.getAttribute(`data-title-${lang}`);
-          if (title) {
-            document.title = title;
-          }
-
-          const description = body.getAttribute(`data-description-${lang}`);
-          const descriptionTag = document.querySelector("meta[name='description']");
-          if (description && descriptionTag) {
-            descriptionTag.setAttribute("content", description);
-          }
-
-          document.querySelectorAll("[data-lang-toggle]").forEach((button) => {
-            const buttonLang = button.getAttribute("data-lang-toggle");
-            const isActive = buttonLang === lang;
-            button.setAttribute("aria-pressed", String(isActive));
-            button.classList.toggle("is-active", isActive);
-          });
-
-          if (persist) {
-            try {
-              window.localStorage.setItem(STORAGE_KEY, lang);
-            } catch {
-              // Ignore blocked storage in private browsing modes.
-            }
-          }
-        };
-
-        const initialLanguage = getSavedLanguage() ?? detectLanguage();
-        applyLanguage(initialLanguage, false);
-
-        document.querySelectorAll("[data-lang-toggle]").forEach((button) => {
-          button.addEventListener("click", () => {
-            const nextLanguage = button.getAttribute("data-lang-toggle");
-            if (nextLanguage) {
-              applyLanguage(nextLanguage, true);
-            }
+            document.cookie = `${key}=${nextLang}; Max-Age=${year}; Path=/; SameSite=Lax`;
           });
         });
       })();

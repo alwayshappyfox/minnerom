@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { blogIntro, blogPosts, metaText, localizedPathPair } from "../../../lib/content";
+import { LOCALES, localizePath, type Locale } from "../../../lib/i18n";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
+}
+
+const { lang } = Astro.props as { lang: Locale };
+const canonicalPath = localizePath(lang, "/blog");
+const switchUrls = localizedPathPair(lang, "/blog");
+---
+
+<BaseLayout
+  lang={lang}
+  title={metaText.blogTitle[lang]}
+  description={metaText.blogDescription[lang]}
+  canonicalPath={canonicalPath}
+  switchUrls={switchUrls}
+  hreflangUrls={{
+    ru: localizePath("ru", "/blog"),
+    en: localizePath("en", "/blog"),
+  }}
+>
+  <h1 class="page-title">{metaText.blogTitle[lang]}</h1>
+  <p class="muted">{blogIntro[lang]}</p>
+
+  <section class="grid">
+    {blogPosts.map((post) => (
+      <article class="card">
+        <h2>{post.title[lang]}</h2>
+        <p class="muted">{post.date}</p>
+        <p>{post.excerpt[lang]}</p>
+        <a href={localizePath(lang, `/blog/${post.slug[lang]}`)}>{lang === "ru" ? "Читать" : "Read"}</a>
+      </article>
+    ))}
+  </section>
+</BaseLayout>

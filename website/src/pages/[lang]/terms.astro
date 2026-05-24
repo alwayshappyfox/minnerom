@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { localizedPathPair, metaText, termsText } from "../../lib/content";
+import { LOCALES, localizePath, type Locale } from "../../lib/i18n";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
+}
+
+const { lang } = Astro.props as { lang: Locale };
+const canonicalPath = localizePath(lang, "/terms");
+const switchUrls = localizedPathPair(lang, "/terms");
+---
+
+<BaseLayout
+  lang={lang}
+  title={metaText.termsTitle[lang]}
+  description={metaText.termsDescription[lang]}
+  canonicalPath={canonicalPath}
+  switchUrls={switchUrls}
+  hreflangUrls={{
+    ru: localizePath("ru", "/terms"),
+    en: localizePath("en", "/terms"),
+  }}
+>
+  <h1 class="page-title">{metaText.termsTitle[lang]}</h1>
+  <article class="card">
+    <p>{termsText[lang]}</p>
+  </article>
+</BaseLayout>

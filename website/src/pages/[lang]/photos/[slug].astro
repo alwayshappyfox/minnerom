@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { photoItems } from "../../../lib/content";
+import { LOCALES, localizePath, type Locale } from "../../../lib/i18n";
+
+export function getStaticPaths() {
+  return LOCALES.flatMap((lang) =>
+    photoItems.map((photo) => ({
+      params: {
+        lang,
+        slug: photo.slug[lang],
+      },
+      props: {
+        lang,
+        photo,
+      },
+    })),
+  );
+}
+
+const { lang, photo } = Astro.props as {
+  lang: Locale;
+  photo: (typeof photoItems)[number];
+};
+
+const canonicalPath = localizePath(lang, `/photos/${photo.slug[lang]}`);
+const switchUrls = {
+  ru: localizePath("ru", `/photos/${photo.slug.ru}`),
+  en: localizePath("en", `/photos/${photo.slug.en}`),
+};
+---
+
+<BaseLayout
+  lang={lang}
+  title={photo.title[lang]}
+  description={photo.description[lang]}
+  canonicalPath={canonicalPath}
+  switchUrls={switchUrls}
+  hreflangUrls={switchUrls}
+>
+  <article class="card">
+    <h1 class="page-title">{photo.title[lang]}</h1>
+    <div class="fake-media">{lang === "ru" ? `Изображение: ${photo.title[lang]}` : `Image: ${photo.title[lang]}`}</div>
+    <p>{photo.description[lang]}</p>
+    <p class="muted">{photo.story[lang]}</p>
+    <p>
+      <a href={localizePath(lang, "/photos")}>{lang === "ru" ? "← Назад к списку фото" : "← Back to photos"}</a>
+    </p>
+  </article>
+</BaseLayout>

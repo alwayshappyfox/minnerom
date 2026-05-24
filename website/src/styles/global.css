@@ -98,12 +98,16 @@ nav {
 }
 
 .lang-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   padding: 6px 10px;
   background: transparent;
   color: var(--text);
   cursor: pointer;
   font: inherit;
+  text-decoration: none;
 }
 
 .lang-btn:hover {

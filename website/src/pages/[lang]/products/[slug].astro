@@ -1,0 +1,78 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { productItems } from "../../../lib/content";
+import { LOCALES, localizePath, type Locale } from "../../../lib/i18n";
+
+export function getStaticPaths() {
+  return LOCALES.flatMap((lang) =>
+    productItems
+      .filter((product) => product.availableIn.includes(lang))
+      .flatMap((product) => {
+        const slug = product.slug[lang];
+        if (!slug) {
+          return [];
+        }
+
+        return [
+          {
+            params: {
+              lang,
+              slug,
+            },
+            props: {
+              lang,
+              product,
+            },
+          },
+        ];
+      }),
+  );
+}
+
+const { lang, product } = Astro.props as {
+  lang: Locale;
+  product: (typeof productItems)[number];
+};
+
+const currentSlug = product.slug[lang];
+if (!currentSlug) {
+  throw new Error(`Missing slug for language ${lang} and product ${product.id}`);
+}
+
+const canonicalPath = localizePath(lang, `/products/${currentSlug}`);
+
+const ruPath = product.slug.ru
+  ? localizePath("ru", `/products/${product.slug.ru}`)
+  : localizePath("ru", "/products");
+const enPath = product.slug.en
+  ? localizePath("en", `/products/${product.slug.en}`)
+  : localizePath("en", "/products");
+
+const switchUrls = {
+  ru: ruPath,
+  en: enPath,
+};
+
+const hreflangUrls = product.slug.ru && product.slug.en ? switchUrls : { [lang]: canonicalPath };
+---
+
+<BaseLayout
+  lang={lang}
+  title={product.name[lang]}
+  description={product.description[lang]}
+  canonicalPath={canonicalPath}
+  switchUrls={switchUrls}
+  hreflangUrls={hreflangUrls}
+>
+  <article class="card">
+    <h1 class="page-title">{product.name[lang]}</h1>
+    <div class="fake-media">{lang === "ru" ? "Изображение товара" : "Product image"}</div>
+    <p>{product.description[lang]}</p>
+    <p class="muted">{product.details[lang]}</p>
+    <p>
+      <a href={localizePath(lang, "/products")}>
+        {lang === "ru" ? "← Назад к витрине" : "← Back to showcase"}
+      </a>
+    </p>
+  </article>
+</BaseLayout>

@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { contactsText, localizedPathPair, metaText } from "../../lib/content";
+import { LOCALES, localizePath, type Locale } from "../../lib/i18n";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
+}
+
+const { lang } = Astro.props as { lang: Locale };
+const canonicalPath = localizePath(lang, "/contacts");
+const switchUrls = localizedPathPair(lang, "/contacts");
+---
+
+<BaseLayout
+  lang={lang}
+  title={metaText.contactsTitle[lang]}
+  description={metaText.contactsDescription[lang]}
+  canonicalPath={canonicalPath}
+  switchUrls={switchUrls}
+  hreflangUrls={{
+    ru: localizePath("ru", "/contacts"),
+    en: localizePath("en", "/contacts"),
+  }}
+>
+  <h1 class="page-title">{metaText.contactsTitle[lang]}</h1>
+  <p class="muted">{contactsText.intro[lang]}</p>
+
+  <form action="#" method="post">
+    <label>
+      {contactsText.name[lang]}
+      <input type="text" name="name" placeholder={contactsText.namePlaceholder[lang]} required />
+    </label>
+    <label>
+      {contactsText.email[lang]}
+      <input type="email" name="email" placeholder="you@example.com" required />
+    </label>
+    <label>
+      {contactsText.message[lang]}
+      <textarea name="message" placeholder={contactsText.messagePlaceholder[lang]} required></textarea>
+    </label>
+    <button class="button primary" type="submit">{contactsText.submit[lang]}</button>
+  </form>
+</BaseLayout>

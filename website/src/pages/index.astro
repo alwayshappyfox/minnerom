@@ -1,68 +1,50 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import { DEFAULT_LOCALE, localizePath } from "../lib/i18n";
+
+const fallback = localizePath(DEFAULT_LOCALE);
 ---
 
-<BaseLayout
-  title="Главная"
-  titleEn="Home"
-  description="Визитка Minnerom: фото, блог, товары и контакты."
-  descriptionEn="Minnerom website: photos, blog, products and contacts."
->
-  <section class="hero home-main">
-    <h1 data-i18n data-i18n-ru="Minnerom" data-i18n-en="Minnerom">Minnerom</h1>
-  </section>
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Minnerom</title>
+    <script is:inline>
+      (() => {
+        const readCookie = (name) => {
+          const cookie = document.cookie
+            .split(";")
+            .map((part) => part.trim())
+            .find((part) => part.startsWith(`${name}=`));
 
-  <section
-    class="grid home-main"
-    aria-label="Разделы сайта"
-    data-i18n-aria
-    data-i18n-aria-ru="Разделы сайта"
-    data-i18n-aria-en="Site sections"
-  >
-    <article class="card">
-      <h2 data-i18n data-i18n-ru="Фотографии" data-i18n-en="Photos">Фотографии</h2>
-      <p
-        class="muted"
-        data-i18n
-        data-i18n-ru="Каталог фото и отдельные карточки с описанием."
-        data-i18n-en="Photo catalog with separate detail pages."
-      >
-        Каталог фото и отдельные карточки с описанием.
-      </p>
-      <a href="/photos" data-i18n data-i18n-ru="Перейти в раздел" data-i18n-en="Open section">
-        Перейти в раздел
-      </a>
-    </article>
-    <article class="card">
-      <h2 data-i18n data-i18n-ru="Блог" data-i18n-en="Blog">Блог</h2>
-      <p
-        class="muted"
-        data-i18n
-        data-i18n-ru="Публикации, заметки и анонсы новых работ."
-        data-i18n-en="Articles, notes and announcements."
-      >
-        Публикации, заметки и анонсы новых работ.
-      </p>
-      <a href="/blog" data-i18n data-i18n-ru="Читать блог" data-i18n-en="Read blog">Читать блог</a>
-    </article>
-    <article class="card">
-      <h2 data-i18n data-i18n-ru="Товары" data-i18n-en="Products">Товары</h2>
-      <p
-        class="muted"
-        data-i18n
-        data-i18n-ru="Витрина без оплаты, как подготовка к e-commerce этапу."
-        data-i18n-en="Showcase without checkout, ready for a later e-commerce stage."
-      >
-        Витрина без оплаты, как подготовка к e-commerce этапу.
-      </p>
-      <a
-        href="/products"
-        data-i18n
-        data-i18n-ru="Открыть витрину"
-        data-i18n-en="Open showcase"
-      >
-        Открыть витрину
-      </a>
-    </article>
-  </section>
-</BaseLayout>
+          if (!cookie) {
+            return null;
+          }
+
+          return cookie.slice(name.length + 1);
+        };
+
+        const saved = readCookie("minnerom_lang");
+        if (saved === "ru" || saved === "en") {
+          window.location.replace(`/${saved}/`);
+          return;
+        }
+
+        const languages = Array.isArray(navigator.languages)
+          ? navigator.languages
+          : [navigator.language || ""];
+
+        const isRuLanguage = languages.some((entry) => entry.toLowerCase().startsWith("ru"));
+        window.location.replace(isRuLanguage ? "/ru/" : "/en/");
+      })();
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content={`0;url=${fallback}`} />
+    </noscript>
+  </head>
+  <body>
+    <p><a href={fallback}>Перейти на сайт / Go to site</a></p>
+  </body>
+</html>

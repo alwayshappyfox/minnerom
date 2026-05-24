@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getProductsByLocale, metaText, localizedPathPair, productsIntro } from "../../../lib/content";
+import { LOCALES, localizePath, type Locale } from "../../../lib/i18n";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
+}
+
+const { lang } = Astro.props as { lang: Locale };
+const products = getProductsByLocale(lang);
+const canonicalPath = localizePath(lang, "/products");
+const switchUrls = localizedPathPair(lang, "/products");
+---
+
+<BaseLayout
+  lang={lang}
+  title={metaText.productsTitle[lang]}
+  description={metaText.productsDescription[lang]}
+  canonicalPath={canonicalPath}
+  switchUrls={switchUrls}
+  hreflangUrls={{
+    ru: localizePath("ru", "/products"),
+    en: localizePath("en", "/products"),
+  }}
+>
+  <h1 class="page-title">{metaText.productsTitle[lang]}</h1>
+  <p class="muted">{productsIntro[lang]}</p>
+
+  <section class="grid">
+    {products.map((product) => {
+      const slug = product.slug[lang];
+      if (!slug) {
+        return null;
+      }
+
+      return (
+        <article class="card">
+          <div class="fake-media">{lang === "ru" ? "Превью товара" : "Product preview"}</div>
+          <h2>{product.name[lang]}</h2>
+          <p>{product.description[lang]}</p>
+          <a href={localizePath(lang, `/products/${slug}`)}>
+            {lang === "ru" ? "Открыть карточку" : "Open page"}
+          </a>
+        </article>
+      );
+    })}
+  </section>
+</BaseLayout>
