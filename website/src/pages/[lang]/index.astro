@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { homeSections, metaText, localizedPathPair, uiText } from "../../lib/content";
+import { metaText, localizedPathPair, uiText } from "../../lib/content";
 import { LOCALES, localizePath, type Locale } from "../../lib/i18n";
 
 export function getStaticPaths() {
@@ -13,6 +13,45 @@ export function getStaticPaths() {
 const { lang } = Astro.props as { lang: Locale };
 const switchUrls = localizedPathPair(lang, "/");
 const canonicalPath = localizePath(lang);
+
+const copy =
+  lang === "ru"
+    ? {
+        indexNavLabel: "Навигация по блокам",
+        heroLabel: "Первый блок",
+        secondLabel: "Второй блок",
+        imageStub: "Заглушка изображения",
+        heroTitle: "Текст заглушка для шапки",
+        heroDescription:
+          "Этот блок имитирует крупный экранный баннер с параллакс-фоном и плавающим текстом поверх изображения.",
+        secondTitle: "Текст заглушка для второго блока",
+        secondDescription:
+          "Второй блок повторяет эффект: текст двигается в обычном потоке, а фоновый слой скользит медленнее.",
+        productsLabel: "Заглушки товаров",
+        productNamePrefix: "Товар-заглушка",
+        productHint: "пустая карточка",
+      }
+    : {
+        indexNavLabel: "Section navigation",
+        heroLabel: "First block",
+        secondLabel: "Second block",
+        imageStub: "Image placeholder",
+        heroTitle: "Header placeholder text",
+        heroDescription:
+          "This block imitates a full-screen hero with a parallax background and text floating above the image.",
+        secondTitle: "Second block placeholder text",
+        secondDescription:
+          "The second block repeats the same effect: text scrolls normally while the background layer moves slower.",
+        productsLabel: "Product placeholders",
+        productNamePrefix: "Placeholder product",
+        productHint: "empty card",
+      };
+
+const placeholderProducts = [1, 2, 3].map((number) => ({
+  title: `${copy.productNamePrefix} ${String(number).padStart(2, "0")}`,
+  hint: copy.productHint,
+  href: localizePath(lang, "/products"),
+}));
 ---
 
 <BaseLayout
@@ -26,17 +65,134 @@ const canonicalPath = localizePath(lang);
     en: localizePath("en"),
   }}
 >
-  <section class="hero home-main">
-    <h1>{uiText.siteName}</h1>
-  </section>
+  <div class="Index home-index" data-index-root>
+    <section
+      id="index-hero"
+      class="Index-page Index-page--has-image full-bleed"
+      data-parallax-original-element
+      data-parallax-speed="0.18"
+    >
+      <figure class="Index-page-image" data-parallax-image-wrapper aria-hidden="true">
+        <div class="Index-page-image-placeholder Index-page-image-placeholder--warm"></div>
+      </figure>
+      <div class="Index-page-content">
+        <p class="index-kicker">{copy.imageStub}</p>
+        <h1>{copy.heroTitle}</h1>
+        <p>{copy.heroDescription}</p>
+      </div>
+    </section>
 
-  <section class="grid home-main" aria-label={lang === "ru" ? "Разделы сайта" : "Site sections"}>
-    {homeSections.map((section) => (
-      <article class="card">
-        <h2>{section.title[lang]}</h2>
-        <p class="muted">{section.description[lang]}</p>
-        <a href={localizePath(lang, section.href)}>{section.cta[lang]}</a>
-      </article>
-    ))}
-  </section>
+    <section class="product-placeholder-strip" aria-label={copy.productsLabel}>
+      {placeholderProducts.map((product) => (
+        <a class="product-placeholder-link" href={product.href}>
+          <span>{product.title}</span>
+          <small>{product.hint}</small>
+        </a>
+      ))}
+    </section>
+
+    <section
+      id="index-second"
+      class="Index-page Index-page--has-image full-bleed"
+      data-parallax-original-element
+      data-parallax-speed="0.14"
+    >
+      <figure class="Index-page-image" data-parallax-image-wrapper aria-hidden="true">
+        <div class="Index-page-image-placeholder Index-page-image-placeholder--cool"></div>
+      </figure>
+      <div class="Index-page-content">
+        <p class="index-kicker">{copy.imageStub}</p>
+        <h2>{copy.secondTitle}</h2>
+        <p>{copy.secondDescription}</p>
+      </div>
+    </section>
+
+    <nav class="Index-nav" aria-label={copy.indexNavLabel}>
+      <a class="Index-nav-item is-active" href="#index-hero" data-index-nav-item="index-hero">
+        <span class="Index-nav-dot" aria-hidden="true"></span>
+        <span class="sr-only">{copy.heroLabel}</span>
+      </a>
+      <a class="Index-nav-item" href="#index-second" data-index-nav-item="index-second">
+        <span class="Index-nav-dot" aria-hidden="true"></span>
+        <span class="sr-only">{copy.secondLabel}</span>
+      </a>
+    </nav>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const root = document.querySelector("[data-index-root]");
+      if (!root) {
+        return;
+      }
+
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const sections = Array.from(root.querySelectorAll("[data-parallax-original-element]"));
+      const navItems = Array.from(root.querySelectorAll("[data-index-nav-item]"));
+
+      const setActiveNav = (activeId) => {
+        navItems.forEach((item) => {
+          const isActive = item.getAttribute("data-index-nav-item") === activeId;
+          item.classList.toggle("is-active", isActive);
+          if (isActive) {
+            item.setAttribute("aria-current", "location");
+          } else {
+            item.removeAttribute("aria-current");
+          }
+        });
+      };
+
+      if (!prefersReducedMotion) {
+        const layers = sections
+          .map((section) => {
+            const layer = section.querySelector("[data-parallax-image-wrapper]");
+            if (!layer) {
+              return null;
+            }
+
+            const speed = Number.parseFloat(section.getAttribute("data-parallax-speed") || "0.15");
+            return { section, layer, speed };
+          })
+          .filter(Boolean);
+
+        let rafId = 0;
+        const updateParallax = () => {
+          const viewportCenter = window.innerHeight / 2;
+          layers.forEach(({ section, layer, speed }) => {
+            const rect = section.getBoundingClientRect();
+            const sectionCenter = rect.top + rect.height / 2;
+            const delta = (sectionCenter - viewportCenter) * speed * -1;
+            layer.style.transform = `translate3d(0, ${delta.toFixed(2)}px, 0)`;
+          });
+          rafId = 0;
+        };
+
+        const queueParallax = () => {
+          if (!rafId) {
+            rafId = window.requestAnimationFrame(updateParallax);
+          }
+        };
+
+        window.addEventListener("scroll", queueParallax, { passive: true });
+        window.addEventListener("resize", queueParallax);
+        queueParallax();
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveNav(entry.target.id);
+            }
+          });
+        },
+        {
+          threshold: 0.55,
+          rootMargin: "-10% 0px -10% 0px",
+        },
+      );
+
+      sections.forEach((section) => observer.observe(section));
+    })();
+  </script>
 </BaseLayout>
