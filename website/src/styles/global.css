@@ -261,6 +261,14 @@ main {
     linear-gradient(180deg, rgb(0 0 0 / 6%), rgb(0 0 0 / 0%) 30%, rgb(0 0 0 / 12%));
 }
 
+.ls-photo-stub--hero {
+  background:
+    linear-gradient(180deg, rgb(59 43 40 / 22%) 0%, rgb(59 43 40 / 8%) 42%, rgb(59 43 40 / 28%) 100%),
+    url("/photo/background.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+
 .ls-photo-stub--gallery {
   background:
     radial-gradient(circle at 84% 18%, rgb(124 1 21 / 14%), transparent 48%),
@@ -545,22 +553,6 @@ main {
   text-align: center;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-brown));
   color: #fff;
-}
-
-.content-media {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  margin-bottom: 14px;
-  background: #e3e3e3;
-}
-
-.content-media--detail {
-  aspect-ratio: auto;
-  max-height: min(72vh, 920px);
 }
 
 form {

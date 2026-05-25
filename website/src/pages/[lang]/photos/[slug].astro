@@ -2,7 +2,6 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { photoItems } from "../../../lib/content";
 import { LOCALES, localizePath, type Locale } from "../../../lib/i18n";
-import { photoDetailAsset, toResponsiveImage } from "../../../lib/media";
 
 export function getStaticPaths() {
   return LOCALES.flatMap((lang) =>
@@ -29,7 +28,6 @@ const switchUrls = {
   ru: localizePath("ru", `/photos/${photo.slug.ru}`),
   en: localizePath("en", `/photos/${photo.slug.en}`),
 };
-const image = toResponsiveImage(photoDetailAsset(photo.imageKey));
 ---
 
 <BaseLayout
@@ -42,15 +40,7 @@ const image = toResponsiveImage(photoDetailAsset(photo.imageKey));
 >
   <article class="card">
     <h1 class="page-title">{photo.title[lang]}</h1>
-    <img
-      class="content-media content-media--detail"
-      src={image.src}
-      srcset={image.srcset}
-      sizes={image.sizes}
-      alt={photo.title[lang]}
-      loading="eager"
-      decoding="async"
-    />
+    <div class="fake-media">{lang === "ru" ? `Изображение: ${photo.title[lang]}` : `Image: ${photo.title[lang]}`}</div>
     <p>{photo.description[lang]}</p>
     <p class="muted">{photo.story[lang]}</p>
     <p>

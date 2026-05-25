@@ -2,7 +2,6 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { metaText, localizedPathPair } from "../../lib/content";
 import { LOCALES, localizePath, type Locale } from "../../lib/i18n";
-import { heroAsset, toResponsiveImage } from "../../lib/media";
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({
@@ -38,7 +37,6 @@ const copy =
 
 const galleryHref = localizePath(lang, "/photos");
 const blogHref = localizePath(lang, "/blog");
-const heroImage = toResponsiveImage(heroAsset);
 ---
 
 <BaseLayout
@@ -57,9 +55,7 @@ const heroImage = toResponsiveImage(heroAsset);
       <figure class="ls-parallax-layer" data-parallax-layer aria-hidden="true">
         <img
           class="ls-photo-image ls-photo-image--hero"
-          src={heroImage.src}
-          srcset={heroImage.srcset}
-          sizes={heroImage.sizes}
+          src="/photo/background-hero.jpg"
           alt=""
           loading="eager"
           decoding="async"
@@ -81,15 +77,7 @@ const heroImage = toResponsiveImage(heroAsset);
 
     <section class="ls-parallax ls-parallax--content full-bleed" data-parallax-section data-parallax-speed="0.16">
       <figure class="ls-parallax-layer" data-parallax-layer aria-hidden="true">
-        <img
-          class="ls-photo-image"
-          src={heroImage.src}
-          srcset={heroImage.srcset}
-          sizes={heroImage.sizes}
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
+        <div class="ls-photo-stub ls-photo-stub--gallery"></div>
       </figure>
       <div class="ls-parallax-content ls-parallax-content--center">
         <p class="ls-overline">{copy.photoStubLabel}</p>
@@ -103,15 +91,7 @@ const heroImage = toResponsiveImage(heroAsset);
 
     <section class="ls-parallax ls-parallax--content full-bleed" data-parallax-section data-parallax-speed="0.14">
       <figure class="ls-parallax-layer" data-parallax-layer aria-hidden="true">
-        <img
-          class="ls-photo-image"
-          src={heroImage.src}
-          srcset={heroImage.srcset}
-          sizes={heroImage.sizes}
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
+        <div class="ls-photo-stub ls-photo-stub--blog"></div>
       </figure>
       <div class="ls-parallax-content ls-parallax-content--center">
         <p class="ls-overline">{copy.photoStubLabel}</p>
