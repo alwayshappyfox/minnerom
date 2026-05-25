@@ -7,7 +7,7 @@ const text = (ru: string, en: string): LocalizedText => ({ ru, en });
 export const uiText = {
   siteName: "Minnerom",
   navigation: {
-    photos: text("Фото", "Photos"),
+    photos: text("Гелеря", "Gallery"),
     blog: text("Блог", "Blog"),
     products: text("Товары", "Products"),
     contacts: text("Контакты", "Contacts"),
@@ -24,11 +24,11 @@ export const uiText = {
 export const metaText = {
   homeTitle: text("Главная", "Home"),
   homeDescription: text(
-    "Визитка Minnerom: фото, блог, товары и контакты.",
-    "Minnerom website: photos, blog, products and contacts.",
+    "Визитка Minnerom: Гелеря, блог, товары и контакты.",
+    "Minnerom website: gallery, blog, products and contacts.",
   ),
-  photosTitle: text("Фотографии", "Photos"),
-  photosDescription: text("Список фотографий Minnerom.", "Minnerom photo list."),
+  photosTitle: text("Гелеря", "Gallery"),
+  photosDescription: text("Гелеря Minnerom.", "Minnerom gallery."),
   blogTitle: text("Блог", "Blog"),
   blogDescription: text("Блог Minnerom.", "Minnerom blog."),
   productsTitle: text("Товары", "Products"),
@@ -47,10 +47,10 @@ export const metaText = {
 export const homeSections = [
   {
     key: "photos",
-    title: text("Фотографии", "Photos"),
+    title: text("Гелеря", "Gallery"),
     description: text(
-      "Каталог фото и отдельные карточки с описанием.",
-      "Photo catalog with separate detail pages.",
+      "Каталог гелереи и отдельные карточки с описанием.",
+      "Gallery catalog with separate detail pages.",
     ),
     href: "/photos",
     cta: text("Перейти в раздел", "Open section"),
@@ -125,8 +125,8 @@ export const blogPosts: BlogPost[] = [
       "What is already configured on the server and how the site will evolve.",
     ),
     content: text(
-      "Сервер на VPS готов: Nginx, HTTPS, автопродление сертификата и базовая структура Astro. Следующий шаг — наполнить контентом фото, блог и витрину.",
-      "The VPS is ready: Nginx, HTTPS, certificate auto-renewal and a base Astro structure. Next step is to fill photos, blog and showcase content.",
+      "Сервер на VPS готов: Nginx, HTTPS, автопродление сертификата и базовая структура Astro. Следующий шаг — наполнить контентом гелереи, блог и витрину.",
+      "The VPS is ready: Nginx, HTTPS, certificate auto-renewal and a base Astro structure. Next step is to fill gallery, blog and showcase content.",
     ),
     date: "25.05.2026",
   },

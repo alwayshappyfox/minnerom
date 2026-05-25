@@ -32,7 +32,7 @@ const canonicalPath = localizePath(lang, "/photos");
   <section class="grid">
     {photoItems.map((photo) => (
       <article class="card">
-        <div class="fake-media">{lang === "ru" ? "Превью фото" : "Photo preview"}</div>
+        <div class="fake-media">{lang === "ru" ? "Превью гелереи" : "Gallery preview"}</div>
         <h2>{photo.title[lang]}</h2>
         <p class="muted">{photo.description[lang]}</p>
         <a href={localizePath(lang, `/photos/${photo.slug[lang]}`)}>
