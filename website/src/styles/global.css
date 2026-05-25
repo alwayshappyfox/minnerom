@@ -455,12 +455,7 @@ main {
 }
 
 .ls-parallax--hero .ls-parallax-layer::after {
-  background: linear-gradient(
-    180deg,
-    rgb(59 43 40 / 5%) 0%,
-    rgb(59 43 40 / 0%) 38%,
-    rgb(59 43 40 / 10%) 100%
-  );
+  background: none;
 }
 
 .ls-parallax-content--hero,
