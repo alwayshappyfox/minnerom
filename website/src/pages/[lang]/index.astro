@@ -17,35 +17,26 @@ const canonicalPath = localizePath(lang);
 const copy =
   lang === "ru"
     ? {
-        heroLine1: "Фото background лежит в папке",
+        heroLine1: "ФОТО BACKGROUND ЛЕЖИТ В ПАПКЕ",
         heroLine2: "MINNE/PHOTO",
         brand: "Minnerom",
-        productsLabel: "Ссылки на продукты-заглушки",
-        productPrefix: "Продукт-заглушка",
-        productMeta: "пустая карточка",
         galleryTitle: "Галерея",
         blogTitle: "Блог",
         photoStubLabel: "Фото заглушка",
         textStub: "Текст заглушка",
       }
     : {
-        heroLine1: "Background photo is in folder",
+        heroLine1: "BACKGROUND PHOTO IS IN FOLDER",
         heroLine2: "MINNE/PHOTO",
         brand: "Minnerom",
-        productsLabel: "Placeholder product links",
-        productPrefix: "Placeholder product",
-        productMeta: "empty card",
         galleryTitle: "Gallery",
         blogTitle: "Blog",
         photoStubLabel: "Photo placeholder",
         textStub: "Text placeholder",
       };
 
-const placeholderProducts = [1, 2, 3].map((number) => ({
-  title: `${copy.productPrefix} ${String(number).padStart(2, "0")}`,
-  hint: copy.productMeta,
-  href: localizePath(lang, "/products"),
-}));
+const galleryHref = localizePath(lang, "/photos");
+const blogHref = localizePath(lang, "/blog");
 ---
 
 <BaseLayout
@@ -73,17 +64,8 @@ const placeholderProducts = [1, 2, 3].map((number) => ({
       </div>
     </section>
 
-    <section class="ls-products" aria-label={copy.productsLabel}>
-      {placeholderProducts.map((product) => (
-        <a class="ls-product-link" href={product.href}>
-          <span>{product.title}</span>
-          <small>{product.hint}</small>
-        </a>
-      ))}
-    </section>
-
     <section class="ls-title-strip full-bleed">
-      <h2>{copy.galleryTitle}</h2>
+      <h2><a class="ls-title-link" href={galleryHref}>{copy.galleryTitle}</a></h2>
     </section>
 
     <section class="ls-parallax ls-parallax--content full-bleed" data-parallax-section data-parallax-speed="0.16">
@@ -97,7 +79,7 @@ const placeholderProducts = [1, 2, 3].map((number) => ({
     </section>
 
     <section class="ls-title-strip full-bleed">
-      <h2>{copy.blogTitle}</h2>
+      <h2><a class="ls-title-link" href={blogHref}>{copy.blogTitle}</a></h2>
     </section>
 
     <section class="ls-parallax ls-parallax--content full-bleed" data-parallax-section data-parallax-speed="0.14">
