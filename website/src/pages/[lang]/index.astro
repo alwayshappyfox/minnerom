@@ -81,7 +81,15 @@ const heroImage = toResponsiveImage(heroAsset);
 
     <section class="ls-parallax ls-parallax--content full-bleed" data-parallax-section data-parallax-speed="0.16">
       <figure class="ls-parallax-layer" data-parallax-layer aria-hidden="true">
-        <div class="ls-photo-stub ls-photo-stub--gallery"></div>
+        <img
+          class="ls-photo-image"
+          src={heroImage.src}
+          srcset={heroImage.srcset}
+          sizes={heroImage.sizes}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
       </figure>
       <div class="ls-parallax-content ls-parallax-content--center">
         <p class="ls-overline">{copy.photoStubLabel}</p>
@@ -95,7 +103,15 @@ const heroImage = toResponsiveImage(heroAsset);
 
     <section class="ls-parallax ls-parallax--content full-bleed" data-parallax-section data-parallax-speed="0.14">
       <figure class="ls-parallax-layer" data-parallax-layer aria-hidden="true">
-        <div class="ls-photo-stub ls-photo-stub--blog"></div>
+        <img
+          class="ls-photo-image"
+          src={heroImage.src}
+          srcset={heroImage.srcset}
+          sizes={heroImage.sizes}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
       </figure>
       <div class="ls-parallax-content ls-parallax-content--center">
         <p class="ls-overline">{copy.photoStubLabel}</p>
