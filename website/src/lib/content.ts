@@ -7,7 +7,7 @@ const text = (ru: string, en: string): LocalizedText => ({ ru, en });
 export const uiText = {
   siteName: "Minnerom",
   navigation: {
-    photos: text("Гелеря", "Gallery"),
+    photos: text("Галерея", "Gallery"),
     blog: text("Блог", "Blog"),
     products: text("Товары", "Products"),
     contacts: text("Контакты", "Contacts"),
@@ -24,11 +24,11 @@ export const uiText = {
 export const metaText = {
   homeTitle: text("Главная", "Home"),
   homeDescription: text(
-    "Визитка Minnerom: Гелеря, блог, товары и контакты.",
+    "Визитка Minnerom: Галерея, блог, товары и контакты.",
     "Minnerom website: gallery, blog, products and contacts.",
   ),
-  photosTitle: text("Гелеря", "Gallery"),
-  photosDescription: text("Гелеря Minnerom.", "Minnerom gallery."),
+  photosTitle: text("Галерея", "Gallery"),
+  photosDescription: text("Галерея Minnerom.", "Minnerom gallery."),
   blogTitle: text("Блог", "Blog"),
   blogDescription: text("Блог Minnerom.", "Minnerom blog."),
   productsTitle: text("Товары", "Products"),
@@ -47,9 +47,9 @@ export const metaText = {
 export const homeSections = [
   {
     key: "photos",
-    title: text("Гелеря", "Gallery"),
+    title: text("Галерея", "Gallery"),
     description: text(
-      "Каталог гелереи и отдельные карточки с описанием.",
+      "Каталог галереи и отдельные карточки с описанием.",
       "Gallery catalog with separate detail pages.",
     ),
     href: "/photos",
@@ -125,7 +125,7 @@ export const blogPosts: BlogPost[] = [
       "What is already configured on the server and how the site will evolve.",
     ),
     content: text(
-      "Сервер на VPS готов: Nginx, HTTPS, автопродление сертификата и базовая структура Astro. Следующий шаг — наполнить контентом гелереи, блог и витрину.",
+      "Сервер на VPS готов: Nginx, HTTPS, автопродление сертификата и базовая структура Astro. Следующий шаг — наполнить контентом галереи, блог и витрину.",
       "The VPS is ready: Nginx, HTTPS, certificate auto-renewal and a base Astro structure. Next step is to fill gallery, blog and showcase content.",
     ),
     date: "25.05.2026",
