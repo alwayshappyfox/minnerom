@@ -57,6 +57,7 @@ const navLinks = [
     <link rel="alternate" hrefLang="x-default" href={new URL("/", SITE_URL).toString()} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <slot name="head" />
     <title>{pageTitle}</title>
   </head>
   <body>

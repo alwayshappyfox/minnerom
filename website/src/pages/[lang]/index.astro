@@ -50,13 +50,27 @@ const blogHref = localizePath(lang, "/blog");
     en: localizePath("en"),
   }}
 >
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    href="/photo/background-hero-2200.jpg"
+    imagesrcset="/photo/background-hero-1280.jpg 1280w, /photo/background-hero-2200.jpg 2200w"
+    imagesizes="100vw"
+    fetchpriority="high"
+  />
+
   <div class="LongScroll" data-long-scroll-root>
     <section class="ls-parallax ls-parallax--hero full-bleed" data-parallax-section data-parallax-speed="0.2">
       <div class="ls-hero-media">
         <figure class="ls-parallax-layer" data-parallax-layer aria-hidden="true">
           <img
             class="ls-photo-image ls-photo-image--hero"
-            src="/photo/background.jpeg?v=20260525b"
+            src="/photo/background-hero-2200.jpg"
+            srcset="/photo/background-hero-1280.jpg 1280w, /photo/background-hero-2200.jpg 2200w"
+            sizes="100vw"
+            width="2200"
+            height="1650"
             alt=""
             loading="eager"
             decoding="async"
