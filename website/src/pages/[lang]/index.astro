@@ -52,23 +52,20 @@ const blogHref = localizePath(lang, "/blog");
 >
   <div class="LongScroll" data-long-scroll-root>
     <section class="ls-parallax ls-parallax--hero full-bleed" data-parallax-section data-parallax-speed="0.2">
-      <figure class="ls-parallax-layer" data-parallax-layer aria-hidden="true">
-        <img
-          class="ls-photo-image ls-photo-image--hero"
-          src="/photo/background.jpeg?v=20260525a"
-          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;"
-          alt=""
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
-      </figure>
-      <div class="ls-parallax-content ls-parallax-content--hero">
-        <p class="ls-overline">
-          {copy.heroLine1}
-          <span>{copy.heroLine2}</span>
-        </p>
-        <div class="ls-brand-badge">{copy.brand}</div>
+      <div class="ls-hero-media">
+        <figure class="ls-parallax-layer" data-parallax-layer aria-hidden="true">
+          <img
+            class="ls-photo-image ls-photo-image--hero"
+            src="/photo/background.jpeg?v=20260525b"
+            alt=""
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </figure>
+        <div class="ls-parallax-content ls-parallax-content--hero">
+          <div class="ls-brand-badge">{copy.brand}</div>
+        </div>
       </div>
     </section>
 
