@@ -53,7 +53,14 @@ const blogHref = localizePath(lang, "/blog");
   <div class="LongScroll" data-long-scroll-root>
     <section class="ls-parallax ls-parallax--hero full-bleed" data-parallax-section data-parallax-speed="0.2">
       <figure class="ls-parallax-layer" data-parallax-layer aria-hidden="true">
-        <div class="ls-photo-stub ls-photo-stub--hero"></div>
+        <img
+          class="ls-photo-image ls-photo-image--hero"
+          src="/photo/background-hero.jpg"
+          alt=""
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
       </figure>
       <div class="ls-parallax-content ls-parallax-content--hero">
         <p class="ls-overline">
