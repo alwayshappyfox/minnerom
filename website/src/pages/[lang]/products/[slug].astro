@@ -2,6 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { productItems } from "../../../lib/content";
 import { LOCALES, localizePath, type Locale } from "../../../lib/i18n";
+import { productDetailAsset, toResponsiveImage } from "../../../lib/media";
 
 export function getStaticPaths() {
   return LOCALES.flatMap((lang) =>
@@ -54,6 +55,7 @@ const switchUrls = {
 };
 
 const hreflangUrls = product.slug.ru && product.slug.en ? switchUrls : { [lang]: canonicalPath };
+const image = toResponsiveImage(productDetailAsset(product.imageKey));
 ---
 
 <BaseLayout
@@ -66,7 +68,15 @@ const hreflangUrls = product.slug.ru && product.slug.en ? switchUrls : { [lang]:
 >
   <article class="card">
     <h1 class="page-title">{product.name[lang]}</h1>
-    <div class="fake-media">{lang === "ru" ? "Изображение товара" : "Product image"}</div>
+    <img
+      class="content-media content-media--detail"
+      src={image.src}
+      srcset={image.srcset}
+      sizes={image.sizes}
+      alt={product.name[lang]}
+      loading="eager"
+      decoding="async"
+    />
     <p>{product.description[lang]}</p>
     <p class="muted">{product.details[lang]}</p>
     <p>

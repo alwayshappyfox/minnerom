@@ -85,6 +85,7 @@ export interface PhotoItem {
   title: LocalizedText;
   description: LocalizedText;
   story: LocalizedText;
+  imageKey: string;
 }
 
 export const photoItems: PhotoItem[] = [
@@ -97,6 +98,7 @@ export const photoItems: PhotoItem[] = [
       "Эта серия снята в ранние часы, когда свет мягкий и направленный.",
       "This series was shot in the early morning when the light is soft and directional.",
     ),
+    imageKey: "morning-light",
   },
 ];
 
@@ -148,6 +150,7 @@ export interface ProductItem {
   name: LocalizedText;
   description: LocalizedText;
   details: LocalizedText;
+  imageKey: string;
 }
 
 export const productItems: ProductItem[] = [
@@ -167,6 +170,7 @@ export const productItems: ProductItem[] = [
       "Позже добавим цену в рублях, варианты бумаги и сроки по РФ/СНГ.",
       "Later we can add USD/EUR pricing, paper options, and shipping zones.",
     ),
+    imageKey: "fine-art-print-a3",
   },
   {
     id: "ru-photo-session",
@@ -183,6 +187,7 @@ export const productItems: ProductItem[] = [
       "Товар виден только в /ru и может иметь локальные условия и цены.",
       "Visible only in /ru with local terms and pricing.",
     ),
+    imageKey: "ru-photo-session",
   },
   {
     id: "en-license-pack",
@@ -199,6 +204,7 @@ export const productItems: ProductItem[] = [
       "Товар виден только в /en и может иметь свои правила лицензирования.",
       "Visible only in /en with separate licensing terms.",
     ),
+    imageKey: "en-license-pack",
   },
 ];
 

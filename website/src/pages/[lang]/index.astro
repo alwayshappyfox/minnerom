@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { metaText, localizedPathPair } from "../../lib/content";
 import { LOCALES, localizePath, type Locale } from "../../lib/i18n";
+import { heroAsset, toResponsiveImage } from "../../lib/media";
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({
@@ -37,6 +38,7 @@ const copy =
 
 const galleryHref = localizePath(lang, "/photos");
 const blogHref = localizePath(lang, "/blog");
+const heroImage = toResponsiveImage(heroAsset);
 ---
 
 <BaseLayout
@@ -55,7 +57,9 @@ const blogHref = localizePath(lang, "/blog");
       <figure class="ls-parallax-layer" data-parallax-layer aria-hidden="true">
         <img
           class="ls-photo-image ls-photo-image--hero"
-          src="/photo/background-hero.jpg"
+          src={heroImage.src}
+          srcset={heroImage.srcset}
+          sizes={heroImage.sizes}
           alt=""
           loading="eager"
           decoding="async"

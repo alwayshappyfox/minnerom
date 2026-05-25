@@ -2,6 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { metaText, localizedPathPair, photoItems, photosIntro } from "../../../lib/content";
 import { LOCALES, localizePath, type Locale } from "../../../lib/i18n";
+import { photoCardAsset, toResponsiveImage } from "../../../lib/media";
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({
@@ -30,15 +31,26 @@ const canonicalPath = localizePath(lang, "/photos");
   <p class="muted">{photosIntro[lang]}</p>
 
   <section class="grid">
-    {photoItems.map((photo) => (
-      <article class="card">
-        <div class="fake-media">{lang === "ru" ? "Превью галереи" : "Gallery preview"}</div>
-        <h2>{photo.title[lang]}</h2>
-        <p class="muted">{photo.description[lang]}</p>
-        <a href={localizePath(lang, `/photos/${photo.slug[lang]}`)}>
-          {lang === "ru" ? "Открыть карточку" : "Open page"}
-        </a>
-      </article>
-    ))}
+    {photoItems.map((photo) => {
+      const image = toResponsiveImage(photoCardAsset(photo.imageKey));
+      return (
+        <article class="card">
+          <img
+            class="content-media"
+            src={image.src}
+            srcset={image.srcset}
+            sizes={image.sizes}
+            alt={photo.title[lang]}
+            loading="lazy"
+            decoding="async"
+          />
+          <h2>{photo.title[lang]}</h2>
+          <p class="muted">{photo.description[lang]}</p>
+          <a href={localizePath(lang, `/photos/${photo.slug[lang]}`)}>
+            {lang === "ru" ? "Открыть карточку" : "Open page"}
+          </a>
+        </article>
+      );
+    })}
   </section>
 </BaseLayout>

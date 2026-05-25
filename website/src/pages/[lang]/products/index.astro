@@ -2,6 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getProductsByLocale, metaText, localizedPathPair, productsIntro } from "../../../lib/content";
 import { LOCALES, localizePath, type Locale } from "../../../lib/i18n";
+import { productCardAsset, toResponsiveImage } from "../../../lib/media";
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({
@@ -36,10 +37,19 @@ const switchUrls = localizedPathPair(lang, "/products");
       if (!slug) {
         return null;
       }
+      const image = toResponsiveImage(productCardAsset(product.imageKey));
 
       return (
         <article class="card">
-          <div class="fake-media">{lang === "ru" ? "Превью товара" : "Product preview"}</div>
+          <img
+            class="content-media"
+            src={image.src}
+            srcset={image.srcset}
+            sizes={image.sizes}
+            alt={product.name[lang]}
+            loading="lazy"
+            decoding="async"
+          />
           <h2>{product.name[lang]}</h2>
           <p>{product.description[lang]}</p>
           <a href={localizePath(lang, `/products/${slug}`)}>
